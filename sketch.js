@@ -2,7 +2,7 @@ let groundImg
 let planeImg
 let musuhImg
 let stage=0
-//fungsi preload untuk memuat file sebelum fungsi setup
+
 function preload(){
    groundImg=loadImage('R.png');
     planeImg=loadImage('s.gif')
@@ -11,7 +11,7 @@ function preload(){
 
 function setup() {
   createCanvas(600, 450);
-  //instansiasi class
+
   hero=new hero(20,200,40,120)
   map=new map();
   monster=new monster(610,168,40,70)
@@ -20,9 +20,9 @@ function setup() {
 }
 
 function draw() {
-//if else stage, ada 3 stage 0,1,2
+
 if(stage==0){
-  //judul
+
   background(0,75,130);
   stroke(255,255,255)
   textSize(30)
@@ -30,7 +30,7 @@ if(stage==0){
   textSize(18)
   text("Tekan enter untuk lanjutkan",200,245)
 }else if(stage==1){
-  //stage game
+
   background(0,75,130);
   noStroke()
   fill(0)
@@ -41,21 +41,21 @@ if(stage==0){
   text(hero.getScore(),88,60)
   text(hero.getLife(),95,80)
  
-  //pemanggilan map dan heroagar di tampilkan di canvas
+
   map.move()
   hero.show()
-  //check apakah arrow key di press
+
     hero.moveLeft();
     hero.moveRight();
     hero.moveUp();
     hero.moveDown()
-  //pemanggilan peluru hero 
+
     hero.showPeluru()
   monster.show()
-  //pemanggilan peluru musuh
+
   monster.showPeluruMusuh()
   
-  //cek apakah peluru hero mengenai musuh, jika kena peluru dan musuh di hapus dr canvas ,score+1
+  
   for(let m of monster.monsters){
     for(let peluru of hero.peluru){
         if(dist(m.x,m.y,peluru.x,peluru.y)<30){
@@ -66,7 +66,7 @@ if(stage==0){
       }
     }
   
-  //cek apakah peluru musuh mengenai hero, kalo kena dihapus dua duanya,life-1
+
   for(let m of monster.peluruMusuh){
       if(dist(hero.x,hero.y,m.x,m.y)<25){
         monster.peluruMusuh.splice(monster.peluruMusuh.indexOf(m),1)
@@ -74,7 +74,7 @@ if(stage==0){
       }  
   }
   
-  //cek apakah monster mengenai hero, jika kena game over,cek apakah skor tertinggi
+ 
   for(let m of monster.monsters){
     if(dist(hero.x,hero.y,m.x,m.y)<40){
       stage=2
@@ -85,8 +85,7 @@ if(stage==0){
     }
   }
   
-  //peluru monster ability
-  //jika peluru ability mengenai hero , life+3, ukuran peluru+2
+  
   if(level.getCurrentLevel()%3==0){
     monster.showAbility()
       if(dist(hero.x,hero.y,monster.x,monster.y)<40){
@@ -96,17 +95,17 @@ if(stage==0){
         hero.ukuran+=2
       }
   }
-  //setup x dan y peluru ability
+ 
   if(monster.monsters.length==1&& level.getCurrentLevel()%3==0){
      monster.setupAbility()
   }
   
-  //jika life =0 , game over
+ 
   if(hero.getLife()<=0){
     stage=2
     hero.getMaxScore()
   }
-  //jika monster sudah habis, level+1,init map,jumlah monster*1.5,kecepatan monster+0.2,hero life+1,kecepatan peluru hero+0.1
+ 
   if(monster.monsters.length<=0){
     level.setLevel()
     map.init()
@@ -117,7 +116,7 @@ if(stage==0){
     hero.kecepatan=+0.1
   }
 
-//stage 2Game Over
+
 }else{
   background(0,75,130);
   stroke(255,255,255)
@@ -131,7 +130,7 @@ if(stage==0){
   text(hero.maxScore,320,290)
 }
 
-//fungsi key , tombol spasi hero attack,tombol enter start, tombol y reset, esc kembali ke opening
+
 }
 function keyPressed(){
   if(stage==1 && keyCode===32){
